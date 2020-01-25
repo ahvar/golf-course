@@ -1,0 +1,168 @@
+create_tournaments
+==================
+    ### Please provide your code here 
+    
+    # 1. Create a lookup dictionary that contains the golf_course_name
+    #    as the key and the golf_course_id as the value using the
+    #    GolfCourse objects passed in the golf_course_list:
+    #    (See example code above.)
+    
+    # 2a. Create an empty list called tournament_list
+    #     that will be filled in with tournament objects
+    #     created in this function from the input file data.
+    
+    # 2b. Create an empty tourn_golfers_dict dictionary that
+    #     will be filled in with the tournament id as the key 
+    #     and the list of golfers as the value. 
+    #     The loop below will fill in this dictionary value list, 
+    #     when each golfer name is read in.
+    
+    #3. Initialize the tourn_id to 1 and the tourn_id_key to 0
+    
+    #4. Use a try/except block to capture a File Not Found Error
+    
+    #   A. Open the input file object for reading the input file.
+    
+    #   B. Call the csv.reader function, passing in the input file
+    #      and capturing the CSV file contents.
+    
+    #   C. Create a list from the file contents:  
+    #      tournament_input_list
+    
+    #   D. Create a loop to traverse the tournament_input_list,
+    #      where the loop variable 'tourn_info' will contain either 
+    #      the tournament information, or a golfer name.
+
+    #      1. Check the length of tourn_info; if length is greater    
+    #         than one, then process the tournament information
+    
+    #         a. Get each of the first five elements of the
+    #            tourn_info list:
+    #              Strip course_name, tourn_name, and start_date
+    #              Convert num_rounds and num_golfers to ints.
+    
+    #         b. Get golf_course id from lookup dictionary created 
+    #            above
+    
+    #         c. Create a new Tournament object, call it tournament,
+    #            passing in tourn_id, tourn_name,  
+    #            golf_course_id, start_date, num_rounds, and 
+    #            num_golfers
+    
+    #         d. Append the tournament object to the tournament_list 
+    
+    #         e. Set the tourn_id_key to tourn_id
+    
+    #         f. Create dictionary entry value for this tourn_id_key, 
+    #            the value is an empty list to be filled in later 
+    #            with the golfer names as they are read from the 
+    #            input file. 
+    
+    #         g. Increment the tourn_id
+    
+    #      2. else the length of tourn_info is one, so this is a
+    #         golfer name, add it to the tourn_golfers_dict value
+    #         list. It will be used later in the create_tourn_golfers 
+    #         method.
+    
+    #         a. Get the golfer name from tourn_info stripping 
+    #            whitespace
+    
+    #         b. Add the golfer name to the tourn_golfers_dict value
+
+    #   E. Close the input file
+    
+    #5. Print the tournament_list objects to the console
+    
+    #6. Return the tournament_list and tourn_golfers_dict
+    return tournament_list, tourn_golfers_dict
+
+create_rounds
+=============
+
+    ### Please provide your code here 
+ 
+    # 1. Create an empty list called rounds_list
+    #   that will be filled in with Round objects
+    #   whose data comes from the parameter - tournament_list
+    
+    # 2. Initialize the round_id
+    
+    # 3. Create an outer loop to traverse the input
+    #   tournament_list, where the loop variable 'tourn'
+    #   will contain one of the Tournament objects in
+    #   tournament_list at each loop iteration
+
+    #   a. Get the number_rounds and tourn_id from the
+    #      Tournament object, tourn, and initialize
+    #      num_rounds to number_rounds - this will be
+    #      decremented below to find the correct day
+    #      for the Round object being built
+    
+    #   b. Create an inner loop to run number_round times
+    #      using the range function, where the loop
+    #      variable 'r' keeps the count for the
+    #      number of Rounds being created
+
+    #      1. Check the value of num_rounds to determne
+    #         the day value of this Round object.
+    #         Use an if/elif/else structure to set the
+    #         day instance variable
+    #         if num_rounds == 4: day = "Thu"
+    #            num_rounds == 3: day = "Fri"
+    #            num_rounds == 2: day = "Sat"
+    #            num_rounds == 1: day = "Sun"
+    
+    #      2. Decrement the num_rounds counter
+    
+    #      3. Create a Round object call it round passing
+    #         in round_id, tourn_id, and day
+    
+    #      4. Append the Round object to the rounds_list
+    
+    #      5. Increment the round_id
+    
+    # 4. Print the round objects to the console
+    
+    # 5. Return the rounds_list
+    return rounds_list
+
+
+create_tourn_golfers
+====================
+
+    ### Please provide your code here     
+    
+    # 1. Create a lookup dictionary (golfer_name_to_id) 
+    #   for golfer_name to golfer_id
+    
+    # 2. Create an empty list called tourn_golfers_list
+    #   that will be filled in with TournGolfer objects
+    #   whose data comes from the tournaments_list parameter,
+    #   and object list parameter, golfers_list
+    
+    # 3. Initialize the tourn_golfer_id 
+    
+    # 4a. Create an outer loop to traverse the input     
+    #   tourn_golfers_dict, whose key will contain the 
+    #   tournament_id, and the value, 'golfer_name_list', will be the 
+    #   list of golfer names for that tournament
+
+    #   4b. Create an inner loop to traverse the
+    #      golfer_name_list, where the loop variable 'golfer_name'  
+    #      will contain one of the golfer names for the tournament
+
+    #      a. get golfer_id from (golfer_name_to_id) lookup dictionary
+    
+    #      b. Create a TournGolfer object. Call it tourn_golfer,
+    #         passing in tourn_golfer_id, tourn_id (from the dict key), 
+    #         and golfer_id
+    
+    #      c. Append the TournGolfer object to the tourn_golfers_list
+    
+    #      d. Increment the tourn_golfer_id
+
+    # 5. Print the tourn_golfers_list objects to the console
+    
+    # 6. Return the tourn_golfers_list
+    return tourn_golfers_list
