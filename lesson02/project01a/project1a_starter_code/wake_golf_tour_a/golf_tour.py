@@ -203,15 +203,15 @@ def create_holes(golf_course_holes_dict):
     holes_list = [ ]
     # unique id that identifies
     unique_hole_num = 1
-    hole_num_string = 'hole number'
-    hole_id = f'{hole_num_string} {unique_hole_num}'
+    hole_num_string = 'unique_hole_id'
+    hole_id = f'{hole_num_string}_{unique_hole_num}'
 
     ### Please provide your code here
     for gc_id, all_holes in golf_course_holes_dict.items():
         for hole in all_holes:
             holes_list.append(Hole(hole_id, gc_id, hole, hole[1]))
-        unique_hole_num += 1
-        hole_id = f'{hole_num_string} {unique_hole_num}'
+            unique_hole_num += 1
+            hole_id = f'{hole_num_string}_{unique_hole_num}'
     
     return holes_list
     
@@ -236,7 +236,17 @@ def create_golfers(filename):
     
     # Create an empty list called golfer_list
     golfer_list = [ ]
-    
+    golfer_num = 1
+    unique_golfer = f'first_last_{golfer_num}'
+    with open('golfersInput.csv') as golfers_in:
+        g_reader = csv.reader(golfers_in)
+        for row in g_reader:
+            name, birthdate = row
+            no_ltspace_name = name.strip()
+            no_ltspace_bday = birthdate.strip()
+            unique_golfer = f'{no_ltspace_name.replace(" ", "_").lower()}_{golfer_num}'
+            golfer_list.append(Golfer(unique_golfer, no_ltspace_name, no_ltspace_bday))
+
     ### Please provide your code here        
 
     return golfer_list 
@@ -280,4 +290,5 @@ def write_objs_to_file(filename, object_list):
     output_file.close()
 
 
-main()
+if __name__ == "__main__":
+    main()
