@@ -1,8 +1,9 @@
 import csv
-
+import pprint
 from golfCourse import GolfCourse
 from hole import Hole
 from golfer import Golfer
+
 
 def main():
     """
@@ -203,16 +204,21 @@ def create_holes(golf_course_holes_dict):
     holes_list = [ ]
     # unique id that identifies
     unique_hole_num = 1
-    hole_num_string = 'unique_hole_id'
-    hole_id = f'{hole_num_string}_{unique_hole_num}'
+    #hole_num_string = 'unique_hole_id'
+    #hole_id = f'{hole_num_string}_{unique_hole_num}'
 
     ### Please provide your code here
     for gc_id, all_holes in golf_course_holes_dict.items():
         for hole in all_holes:
-            holes_list.append(Hole(hole_id, gc_id, hole, hole[1]))
+            holes_list.append(Hole(unique_hole_num, gc_id, hole, hole[1]))
             unique_hole_num += 1
-            hole_id = f'{hole_num_string}_{unique_hole_num}'
-    
+            #hole_id = f'{hole_num_string}_{unique_hole_num}'
+
+    # print holes
+    for hole in holes_list:
+        pprint.pprint(str(hole))
+
+    # return the list
     return holes_list
     
 
@@ -235,20 +241,26 @@ def create_golfers(filename):
     print ("\nThe Golfer object list:\n")
     
     # Create an empty list called golfer_list
-    golfer_list = [ ]
+    golfer_list = []
     golfer_num = 1
-    unique_golfer = f'first_last_{golfer_num}'
     with open('golfersInput.csv') as golfers_in:
         g_reader = csv.reader(golfers_in)
         for row in g_reader:
             name, birthdate = row
             no_ltspace_name = name.strip()
             no_ltspace_bday = birthdate.strip()
-            unique_golfer = f'{no_ltspace_name.replace(" ", "_").lower()}_{golfer_num}'
-            golfer_list.append(Golfer(unique_golfer, no_ltspace_name, no_ltspace_bday))
+            #unique_golfer = f'{no_ltspace_name.replace(" ", "_").lower()}_{golfer_num}'
+            golfer_list.append(Golfer(golfer_num, no_ltspace_name, no_ltspace_bday))
+            golfer_num += 1
 
-    ### Please provide your code here        
+    # reset the golfer id
+    golfer_num = 1
 
+    # print the golfers to the console
+    for golfer in golfer_list:
+        pprint.pprint(str(golfer))
+
+    # return the golfer list
     return golfer_list 
 
 

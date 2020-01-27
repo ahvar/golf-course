@@ -1,3 +1,5 @@
+import datetime
+
 class Golfer:
     """Golfer object derived from data in the golfersInput.csv
 
@@ -49,7 +51,11 @@ class Golfer:
         """
         convert csv date ('mm-dd-yy') to sql date ('YYYY-mm-dd')
         """
-
+        m, d, y = bday.split(sep='-')
+        # assuming for now that all golfers born in the 20th century; might change this later
+        year = int(y) + 1900
+        date = datetime.date(year, int(m), int(d))
+        return f'{date.year}-{date.month}-{date.day}'
 
     # __str__
     def __str__(self):
