@@ -52,26 +52,29 @@ class Golfer:
         """
         convert csv date ('mm-dd-yy') to sql date ('YYYY-mm-dd')
         """
-        # if a bday contains 4 consecutive digits, then it's year is the 'YYYY' format
-        # if the length of the bday is
+        # dd/mm/yyyy
+        four_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{4}", bday)
+        # dd-mm-yyyy
+        four_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{4}", bday)
+        # dd/mm/yy
+        two_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{2}", bday)
+        # dd-mm-yy
+        two_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{2", bday)
 
-        if len(re.findall('[/-]+', bday)) == 0:
-            print('bad date')
-            exit(1)
+        if four_digit_slash_year:
+            day, month, year = four_digit_slash_year.group().split('/')
+            return f'{year}-{month}-{day}'
+        elif four_digit_dash_year:
+            day, month, year = four_digit_dash_year.group().split('-')
+            return f'{year}-{month}-{day}'
+        elif two_digit_slash_year:
+            day, month, year = two_digit_slash_year.group().split('/')
+            return f'{year + 1900}-{month}-{day}'
+        elif two_digit_dash_year:
+            day, month, year = two_digit_dash_year.group().split('-')
+            return f'{year + 1900}-{month}-{day}'
         else:
-
-            for value in re.findall('[/-]+'):
-                if 
-
-
-
-        for char in bday:
-            if
-        m, d, y = bday.split(sep='-')
-        # assuming for now that all golfers born in the 20th century; might change this later
-        year = int(y) + 1900
-        date = datetime.date(year, int(m), int(d))
-        return f'{date.year}-{date.month}-{date.day}'
+            raise Exception
 
     # __str__
     def __str__(self):
