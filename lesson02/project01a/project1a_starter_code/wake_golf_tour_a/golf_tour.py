@@ -212,7 +212,7 @@ def create_holes(golf_course_holes_dict):
         for hole in all_holes:
             holes_list.append(Hole(unique_hole_num, gc_id, hole, hole[1]))
             unique_hole_num += 1
-            #hole_id = f'{hole_num_string}_{unique_hole_num}'
+            # hole_id = f'{hole_num_string}_{unique_hole_num}'
 
     # print holes
     for hole in holes_list:

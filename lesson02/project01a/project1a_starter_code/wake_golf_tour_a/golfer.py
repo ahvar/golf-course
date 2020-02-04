@@ -1,4 +1,5 @@
 import datetime
+import re
 
 class Golfer:
     """Golfer object derived from data in the golfersInput.csv
@@ -51,6 +52,21 @@ class Golfer:
         """
         convert csv date ('mm-dd-yy') to sql date ('YYYY-mm-dd')
         """
+        # if a bday contains 4 consecutive digits, then it's year is the 'YYYY' format
+        # if the length of the bday is
+
+        if len(re.findall('[/-]+', bday)) == 0:
+            print('bad date')
+            exit(1)
+        else:
+
+            for value in re.findall('[/-]+'):
+                if 
+
+
+
+        for char in bday:
+            if
         m, d, y = bday.split(sep='-')
         # assuming for now that all golfers born in the 20th century; might change this later
         year = int(y) + 1900
