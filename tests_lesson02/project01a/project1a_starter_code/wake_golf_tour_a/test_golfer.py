@@ -1,10 +1,10 @@
 import unittest
 import os
 import time
-from golfer import Golfer
+from lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfer import Golfer
 
 
-class MyTestCase(unittest.TestCase):
+class TestGolfer(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
@@ -15,7 +15,7 @@ class MyTestCase(unittest.TestCase):
         # the command line. It's also used to reset the current working directory after a test completes.
         cls._current_directory = os.getcwd()
         # probably don't need this since golfer is not run from the command line
-        cls._golfer_abs_path = os.path.join(cls._current_directory, "golfer.py")
+        # cls._golfer_abs_path = os.path.join(cls._current_directory, "golfer.py")
 
         timestamp = time.strftime("%Y%m%d%H%M%S")
         classname = cls.__name__
@@ -36,7 +36,10 @@ class MyTestCase(unittest.TestCase):
         self.golfer_id = 1
         self.golfer_name = 'Arthur Vargas'
         self.golfer_bday = '04-14-83'
-        self.arthur = Golfer(self.golfer_id, self.golfer_name, self.golfer_bday)
+        try:
+            self.arthur = Golfer(self.golfer_id, self.golfer_name, self.golfer_bday)
+        except Exception as ex:
+            self.fail('Could not construct golfer')
         # the birthday format is not valid
         # arthur_invalid_bday = Golfer(golfer_id, golfer_name, "04 14 83")
         # the name is invalid
@@ -46,32 +49,78 @@ class MyTestCase(unittest.TestCase):
     def tearDownClass(cls):
         os.chdir(cls._current_directory)
 
-
     def test_to_sql_date(self):
-        # positive test case
+        print("\n\n____________________________________________________________")
+        print("Test Case: nominal, test the conversion of the date to the sql date format")
+        test_output_dir = "test_to_sql_date"
+        self.create_test_case_output_dir_and_cd(test_output_dir)
+
+        # positive test case: golfer arthur was constructed during setup
         try:
-            self.assertEqual(str(self.arthur), '1,Arthur Vargas,04-14-1983')
+            self.assertEqual(str(self.arthur), '1,Arthur Vargas,1983-04-14')
         except Exception as ex:
             self.fail(f'An {ex} was thrown when it should not have been')
+
+        # positive test case: a bday with foward slashes and a four digit year
+        try:
+            carlo = Golfer(2, "Carlo Vargas", "12/08/1984")
+            self.assertEqual(str(carlo), '2,Carlo Vargas,1984-12-08')
+        except Exception as ex:
+            self.fail(f'An {ex} was thrown when constructing a golfer with a four digit year bday with slashes')
+
+        # positive test case: a bday with forward slashes and a two digit year
+        try:
+            anna = Golfer(3, "Anna Maria Vargas", "10/28/89")
+            self.assertEqual(str(anna), '3,Anna Maria Vargas,1989-10-28')
+        except Exception as ex:
+            self.fail(f'An {ex} was thrown when constructing a golfer with a two digit year bday with forward slashes')
 
         # negative test case: whitespace is an invalid separator
         invalid_bday = '04 14 83'
         try:
-            arthur_invalid_bday = Golfer(self.golfer_id, self.golfer_name, invalid_bday)
+            chris = Golfer(4, "Christopher Maglione", invalid_bday)
             self.fail()
         except Exception as ex:
             pass
 
         # negative test case: characters over than slashes and dashes are invalid
-        invalid_bday = '04.14.83'
+        invalid_bday = '08.14.85'
         try:
-            arthur_invalid_bday = Golfer(self.golfer_id, self.golfer_name, invalid_bday)
+            topher = Golfer(5, "Christopher Maglione", invalid_bday)
             self.fail()
         except Exception as ex:
             pass
 
+    def print_output(self, ret, out, err):
+        """
+        Print the stdout and stderr values that have been captured
+        :param ret: return code
+        :param out: stdout
+        :param err: stderr
+        :return:
+        """
+        print("\n***********************************************************************************")
+        print("Return the value: %s" % ret)
+        print("\n***********************************************************************************")
+        print("Length of stdout: %s" % len(out))
+        print("stdout:")
+        print(out.decode())
+        print("\n***********************************************************************************")
+        print("Length of stderr: %s" % len(err))
+        print("stderr:")
+        print(err.decode())
 
-
+    def create_test_case_output_dir_and_cd(self, dir_name):
+        """
+        Create a subdirectory to hold the results of this test
+        :param dir_name: directory name
+        :return:
+        """
+        os.makedirs(dir_name)
+        print("Output directory for this test = {}".format(dir_name))
+        os.chdir(dir_name)
+        self._testcase_dir_path = os.path.join(self._output_path, dir_name)
+        print("self._testcase_dir_path = {}".format(dir_name))
 
 
 if __name__ == '__main__':

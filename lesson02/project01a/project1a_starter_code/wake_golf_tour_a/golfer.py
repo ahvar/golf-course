@@ -50,7 +50,7 @@ class Golfer:
     # to_SQL_date(self, bday)
     def to_sql_date(self, bday: str) -> str:
         """
-        convert csv date ('mm-dd-yy') to sql date ('YYYY-mm-dd')
+        convert csv date to sql date ('YYYY-mm-dd')
         """
         # dd/mm/yyyy
         four_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{4}", bday)
@@ -59,20 +59,22 @@ class Golfer:
         # dd/mm/yy
         two_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{2}", bday)
         # dd-mm-yy
-        two_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{2", bday)
+        two_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{2}", bday)
 
-        if four_digit_slash_year:
-            day, month, year = four_digit_slash_year.group().split('/')
+        if len(four_digit_slash_year) > 0:
+            month, day, year = four_digit_slash_year[0].split('/')
             return f'{year}-{month}-{day}'
-        elif four_digit_dash_year:
-            day, month, year = four_digit_dash_year.group().split('-')
+        elif len(four_digit_dash_year) > 0:
+            month, day, year = four_digit_dash_year[0].split('-')
             return f'{year}-{month}-{day}'
-        elif two_digit_slash_year:
-            day, month, year = two_digit_slash_year.group().split('/')
-            return f'{year + 1900}-{month}-{day}'
-        elif two_digit_dash_year:
-            day, month, year = two_digit_dash_year.group().split('-')
-            return f'{year + 1900}-{month}-{day}'
+        elif len(two_digit_slash_year) > 0:
+            month, day, year = two_digit_slash_year[0].split('/')
+            century_20_bday = int(year) + 1900
+            return f'{century_20_bday}-{month}-{day}'
+        elif len(two_digit_dash_year) > 0:
+            month, day, year = two_digit_dash_year[0].split('-')
+            century_20_bday = int(year) + 1900
+            return f'{str(century_20_bday)}-{month}-{day}'
         else:
             raise Exception
 
