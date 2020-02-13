@@ -1,11 +1,6 @@
 import csv
 
 from golfCourse import GolfCourse
-from hole import Hole
-from golfer import Golfer
-from tournGolfer import TournGolfer
-from tournament import Tournament
-from round import Round
 
 
 def main():

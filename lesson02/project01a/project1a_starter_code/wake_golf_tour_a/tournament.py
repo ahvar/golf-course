@@ -24,50 +24,61 @@ class Tournament:
         self.__tourn_id = tourn_id
         self.__tourn_name = name
         self.__course_id = course_id
-        self.__start_date = self.to_SQL_date(start_date)
         self.__num_rounds = num_rounds
         self.__num_golfers = num_golfers
 
     ### Please complete the following functions
         
     # get_tourn_id
+    def get_tourn_id(self):
         """
         return the tourn_id to the caller
         """
+        return self.__tourn_id
 
-    # get_tourn_name
+    def get_tourn_name(self):
         """
         return the tourn_name to the caller
         """
+        return self.__tourn_name
 
     # get_course_id
+    def get_course_id(self):
         """
         return the course_id to the caller
         """
+        return self.__course_id
 
     # get_start_date
+    def get_start_date(self):
         """
         return the start_date to the caller
         """
+        return self.__start_date
 
     # get_num_rounds
+    def get_num_rounds(self):
         """
         return the num_rounds to the caller
         """
+        return self.__num_rounds
 
     # get_num_golfers
+    def get_num_golfers(self):
         """
         return the num_golfers to the caller
         """
-
-    # to_SQL_date(self, start_date):
-        """
-        convert csv date ('mm-dd-yy') to sql date ('YYYY-mm-dd')
-        return the converted date
-        """
+        return self.__num_golfers
 
     #  __str__
+    def __str__(self):
         """
         return a comma-delimiter string
         of the instance variable values
         """
+        return f'{self.get_tourn_id()},' \
+            f'{self.get_tourn_name()},' \
+            f'{self.get_course_id()},' \
+            f'{self.get_start_date()},' \
+            f'{self.get_num_rounds()},' \
+            f'{self.get_num_golfers()}'

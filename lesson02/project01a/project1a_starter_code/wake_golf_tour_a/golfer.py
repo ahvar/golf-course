@@ -1,5 +1,7 @@
 import datetime
 import re
+import lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfer_utilities as utilities
+
 
 class Golfer:
     """Golfer object derived from data in the golfersInput.csv
@@ -22,7 +24,7 @@ class Golfer:
         # golfer name
         self.__golfer_name = name
         # golfer birthdate
-        self.__golfer_birthdate = self.to_sql_date(bday)
+        self.__golfer_birthdate = utilities.to_sql_date(bday)
     
     ### Please complete the following functions
     
@@ -47,37 +49,6 @@ class Golfer:
         """
         return self.__golfer_birthdate
 
-    # to_SQL_date(self, bday)
-    def to_sql_date(self, bday: str) -> str:
-        """
-        convert csv date to sql date ('YYYY-mm-dd')
-        """
-        # dd/mm/yyyy
-        four_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{4}", bday)
-        # dd-mm-yyyy
-        four_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{4}", bday)
-        # dd/mm/yy
-        two_digit_slash_year = re.findall(r"[\d]{1,2}/[\d]{1,2}/[\d]{2}", bday)
-        # dd-mm-yy
-        two_digit_dash_year = re.findall(r"[\d]{1,2}-[\d]{1,2}-[\d]{2}", bday)
-
-        if len(four_digit_slash_year) > 0:
-            month, day, year = four_digit_slash_year[0].split('/')
-            return f'{year}-{month}-{day}'
-        elif len(four_digit_dash_year) > 0:
-            month, day, year = four_digit_dash_year[0].split('-')
-            return f'{year}-{month}-{day}'
-        elif len(two_digit_slash_year) > 0:
-            month, day, year = two_digit_slash_year[0].split('/')
-            century_20_bday = int(year) + 1900
-            return f'{century_20_bday}-{month}-{day}'
-        elif len(two_digit_dash_year) > 0:
-            month, day, year = two_digit_dash_year[0].split('-')
-            century_20_bday = int(year) + 1900
-            return f'{str(century_20_bday)}-{month}-{day}'
-        else:
-            raise Exception
-
     # __str__
     def __str__(self):
         """
@@ -85,3 +56,16 @@ class Golfer:
         of the instance variable values
         """
         return f'{self.get_golfer_id()},{self.get_golfer_name()},{self.get_golfer_birthdate()}'
+
+    def __repr__(self):
+        """
+        Return the code representation of an instance of Golfer
+        :return:
+        """
+
+    def __format__(self, code):
+        """
+
+        :param code:
+        :return:
+        """

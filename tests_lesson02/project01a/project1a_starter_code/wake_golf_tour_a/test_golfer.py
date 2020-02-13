@@ -49,48 +49,6 @@ class TestGolfer(unittest.TestCase):
     def tearDownClass(cls):
         os.chdir(cls._current_directory)
 
-    def test_to_sql_date(self):
-        print("\n\n____________________________________________________________")
-        print("Test Case: nominal, test the conversion of the date to the sql date format")
-        test_output_dir = "test_to_sql_date"
-        self.create_test_case_output_dir_and_cd(test_output_dir)
-
-        # positive test case: golfer arthur was constructed during setup
-        try:
-            self.assertEqual(str(self.arthur), '1,Arthur Vargas,1983-04-14')
-        except Exception as ex:
-            self.fail(f'An {ex} was thrown when it should not have been')
-
-        # positive test case: a bday with foward slashes and a four digit year
-        try:
-            carlo = Golfer(2, "Carlo Vargas", "12/08/1984")
-            self.assertEqual(str(carlo), '2,Carlo Vargas,1984-12-08')
-        except Exception as ex:
-            self.fail(f'An {ex} was thrown when constructing a golfer with a four digit year bday with slashes')
-
-        # positive test case: a bday with forward slashes and a two digit year
-        try:
-            anna = Golfer(3, "Anna Maria Vargas", "10/28/89")
-            self.assertEqual(str(anna), '3,Anna Maria Vargas,1989-10-28')
-        except Exception as ex:
-            self.fail(f'An {ex} was thrown when constructing a golfer with a two digit year bday with forward slashes')
-
-        # negative test case: whitespace is an invalid separator
-        invalid_bday = '04 14 83'
-        try:
-            chris = Golfer(4, "Christopher Maglione", invalid_bday)
-            self.fail()
-        except Exception as ex:
-            pass
-
-        # negative test case: characters over than slashes and dashes are invalid
-        invalid_bday = '08.14.85'
-        try:
-            topher = Golfer(5, "Christopher Maglione", invalid_bday)
-            self.fail()
-        except Exception as ex:
-            pass
-
     def print_output(self, ret, out, err):
         """
         Print the stdout and stderr values that have been captured
