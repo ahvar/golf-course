@@ -536,7 +536,7 @@ def get_tourn_golfer_id(tourn_golfers_list, tourn_id, golfer_id):
     """
 
     for tourn_golfer in tourn_golfers_list:
-        if tourn_golfer.get_golfer_id() == golfer_id:
+        if tourn_golfer.golfer_id() == golfer_id:
             if tourn_golfer.get_tourn_id() == tourn_id:
                 return tourn_golfer.get_tourn_golfer_id()
 

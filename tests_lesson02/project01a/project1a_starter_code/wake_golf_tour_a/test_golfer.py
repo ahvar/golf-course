@@ -80,6 +80,56 @@ class TestGolfer(unittest.TestCase):
         self._testcase_dir_path = os.path.join(self._output_path, dir_name)
         print("self._testcase_dir_path = {}".format(dir_name))
 
+    def test_golfer_id(self):
+        print("\n\n____________________________________________________________")
+        print("Test Case: nominal, test setting and getting of golfer id")
+        testcase_output_dir = "test_golfer_id"
+        self.create_test_case_output_dir_and_cd(testcase_output_dir)
+
+        # positive test case: valid id
+        self.assertEqual(self.arthur.golfer_id, 1)
+
+        try:
+            # positive test case: golfer id is letters and digits
+            arthur_1a = Golfer('1a', "Arthur Hines Vargas", "04-14-1983")
+        except Exception as ex:
+            self.fail(ex)
+
+        try:
+            # positive test case: golfer id is all letters
+            arthur_abc = Golfer('abc', "Arthur", "04-14-1983")
+        except Exception as ex:
+            self.fail(ex)
+
+        try:
+            # negative test case: a golfer id with whitespace
+            arthur_ws = Golfer('1 2', "AHV", "04-14-1983")
+            self.fail()
+        except Exception as ex:
+            pass
+
+        try:
+            arthur_tab = Golfer('3\t4', "AV", "04-14-1983")
+            self.fail()
+        except Exception as ex:
+            pass
+
+    def test_golfer_name(self):
+        print("\n\n____________________________________________________________")
+        print("Test Case: nominal, test setting and getting of golfer name")
+        testcase_output_dir = "test_golfer_name"
+        self.create_test_case_output_dir_and_cd(testcase_output_dir)
+
+        # positive test case: valid id
+        self.assertEqual(self.arthur.golfer_name, "Arthur Vargas")
+
+        try:
+            # negative test case: a golfer name with a digit
+            arthur_ws = Golfer('2', "AH5V", "04-14-1983")
+            self.fail()
+        except Exception as ex:
+            pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,6 @@
 import datetime
 import re
+import string
 import lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfer_utilities as utilities
 
 
@@ -15,39 +16,70 @@ class Golfer:
 
     """
 
-    def __init__(self, golfer_id, name, bday):
+    def __init__(self, golfer_id=None, name=None, bday=None):
         """
         constructor of class Hole (typo? this is the Golfer class)
         """
-        # golfer id
-        self.__golfer_id = golfer_id
-        # golfer name
-        self.__golfer_name = name
-        # golfer birthdate
-        self.__golfer_birthdate = utilities.to_sql_date(bday)
+        self._golfer_id = None
+        self._golfer_name = None
+        self._golfer_birthdate = None
+        self.golfer_birthdate = bday
+        self.golfer_id = golfer_id
+        self.golfer_name = name
     
     ### Please complete the following functions
     
     # get_golfer_id
-    def get_golfer_id(self) -> str:
+    @property
+    def golfer_id(self) -> str:
         """
         return the golfer_id to the caller
         """
-        return self.__golfer_id
+        return self._golfer_id
+
+    @golfer_id.setter
+    def golfer_id(self, id):
+        """
+        Sets the golfer id. Only letters and digits can comprise the golfer id
+        :param id: unique golfer id
+        :return:
+        """
+        ws = [ws for ws in string.whitespace if id.find(ws) is not -1]
+        if len(ws) > 0:
+            raise Exception('Only letters and digits can comprise the golfer id')
+        self._golfer_id = id
 
     # get_golfer_name
-    def get_golfer_name(self) -> str:
+    @property
+    def golfer_name(self) -> str:
         """
         return the golfer_name to the caller
         """
-        return self.__golfer_name
+        return self._golfer_name
+
+    @golfer_name.setter
+    def golfer_name(self, name):
+        """
+        Sets the golfer name to the name parameter. Only letters can comprise a Golfer's name.
+        :param name:
+        :return:
+        """
+        digits = [digit for digit in string.digits if name.find(digit) is not -1]
+        if len(digits) > 0:
+            raise Exception("Only letters can comprise the golfer name")
+        self._golfer_name = name
     
     # get_golfer_birthdate
-    def get_golfer_birthdate(self) -> str:
+    @property
+    def golfer_birthdate(self) -> str:
         """
         return the golfer_birthdate to the caller
         """
-        return self.__golfer_birthdate
+        return self._golfer_birthdate
+
+    @golfer_birthdate.setter
+    def golfer_birthdate(self, bday):
+        self._golfer_birthdate = utilities.to_sql_date(bday)
 
     # __str__
     def __str__(self):
@@ -55,7 +87,7 @@ class Golfer:
         return a comma-delimiter string
         of the instance variable values
         """
-        return f'{self.get_golfer_id()},{self.get_golfer_name()},{self.get_golfer_birthdate()}'
+        return f'{self.golfer_id},{self.golfer_name},{self.golfer_birthdate}'
 
     def __repr__(self):
         """
