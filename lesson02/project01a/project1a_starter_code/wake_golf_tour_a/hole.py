@@ -1,3 +1,6 @@
+import golfer_utilities as utilities
+
+
 class Hole:
     """
     Hole object derived from data in the golfCoursesInput.csv
@@ -17,42 +20,71 @@ class Hole:
         constructor of class Hole
         """
         # unique id for this hole
-        self.__hole_id = hole_id
+        self._hole_id = hole_id
         # unique id for this course
-        self.__course_id = course_id
+        self._course_id = course_id
         # unique int for this hole
-        self.__hole_num = hole_num
+        self._hole_num = hole_num
         # the par for this hole
-        self.__par = par
-
+        self._par = par
+        self.hold_id = None
+        self.course_id = None
+        self.hole_num = None
+        self.par = None
 
     # get_hole_id
-    def get_hole_id(self):
+    @property
+    def hole_id(self):
         """
         return the hole_id to the caller
         """
-        return self.__hole_id
+        return self._hole_id
+
+    @hole_id.setter
+    def hole_id(self, id):
+        if not utilities.valid_id(id):
+            raise Exception(utilities.INVALID_ID.format("hole_id"))
+        self._hole_id = id
 
     # get_course_id
-    def get_course_id(self):
+    @property
+    def course_id(self):
         """
         return the course_id to the caller
         """
-        return self.__course_id
+        return self._course_id
+
+    @course_id.setter
+    def course_id(self, id):
+        if not utilities.valid_id(id):
+            raise Exception(utilities.INVALID_ID.format("course_id"))
+        self._course_id = id
 
     # get_hole_num
-    def get_hole_num(self):
+    @property
+    def hole_num(self):
         """
         return the hole_num to the caller
         """
-        return self.__hole_num
+        return self._hole_num
+
+    @hole_num.setter
+    def hole_num(self, num):
+        if num < 1 or num > 18:
+            raise Exception("Hole number must be 1 - 18")
+        self._hole_num = num
 
     # get_par
-    def get_par(self):
+    @property
+    def par(self):
         """
         return the hole par to the caller
         """
-        return self.__par
+        return self._par
+
+    @par.setter
+    def par(self, par):
+        self._par = par
 
     # __str__
     def __str__(self):
@@ -60,4 +92,4 @@ class Hole:
         create a comma-delimiter string
         of the instance variable values
         """
-        return f'{self.get_hole_id(), self.get_course_id(), self.get_hole_num(), self.get_par()}'
+        return f'{self.hole_id, self.course_id, self.hole_num, self.par}'

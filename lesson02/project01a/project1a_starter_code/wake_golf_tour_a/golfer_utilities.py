@@ -1,7 +1,7 @@
 import re
 import string
 from datetime import date
-
+INVALID_ID = "Only letters and digits can comprise the {}"
 
 # to_SQL_date(self, bday)
 def to_sql_date(bday: str) -> str:
@@ -72,6 +72,17 @@ def to_sql_date_alt(bday: str) -> date:
     else:
         raise Exception
 
+
+def valid_id(id) -> bool:
+    """
+    A unique identifier with only letters and digits
+    :param id:
+    :return:
+    """
+    ws = [ws for ws in string.whitespace if id.find(ws) is not -1]
+    if len(ws) > 0:
+        return False
+    return True
 
 # All of these date formats assume a four digit year
 # Used by the Date class to decode different formats for dates

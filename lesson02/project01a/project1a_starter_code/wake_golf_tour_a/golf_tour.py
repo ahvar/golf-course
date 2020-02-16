@@ -261,7 +261,63 @@ def create_golfers(filename):
         pprint.pprint(str(golfer))
 
     # return the golfer list
-    return golfer_list 
+    return golfer_list
+
+
+def create_rounds(tournament_list):
+    """
+    Use the tournament_list object list, that was
+    returned from the create_tournaments function, which
+    contains 15 Tournament objects with the following
+    instance variables:
+
+    tourn_id, tourn_name, golf_course_id, start_date,
+    num_rounds, num_golfers, golfers...
+
+    Create num_rounds Round objects from every
+    Tournament object element in tournament_list:
+    Add in the following as instance variables values
+
+    round_id, tourn_id, day
+
+    A list is returned, where each element is a Round object
+    """
+    print("\nThe Round object list\n")
+    rounds_list = []
+
+    ### Please provide your code here
+
+    return rounds_list
+
+
+def create_tourn_golfers(tourn_golfers_dict, golfer_list):
+    """
+    Use the tourn_golfers_dict, that was
+    returned from the create_tournaments function, which contains
+    entries with the key being the tourn_id, and the value is a list of golfer_names
+
+    Use the golfers_list object list parameter, that was returned from the
+    create_golfers function, which contains 30 Golfer objects with
+    the following instance  variables:
+
+        golfer_id, golfer_name, golfer_birthdate
+
+    Create a TournGolfer object from every golfer_name listed
+    in the tourn_golfers_dict.
+    Add in the following as instance variables values -
+
+        tourn_golfer_id, tourn_id, golfer_id
+
+    A list is returned, where each element is a TournGolfer object
+
+    """
+
+    print("\nThe TournGolfer object list\n")
+    tourn_golfers_list = []
+
+    ### Please provide your code here
+
+    return tourn_golfers_list
 
 
 def write_objs_to_file(filename, object_list):

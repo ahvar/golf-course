@@ -12,35 +12,24 @@ class TournGolfer(Golfer):
 
     """
     ### Please complete this class
-    def __init__(self, tourn_golfer_id, tourn_id):
+    def __init__(self, golfer_id, golfer_name, golfer_birthday, tourn_golfer_id, tourn_id):
         """
         constructor of class Hole (typo? this is the Golfer class)
         """
-        # tourn_golfer_id
-        self.__tourn_golfer_id = tourn_golfer_id
+        super(Golfer, self).__init__(golfer_id, golfer_name, golfer_birthday)
+        # the id for the golfer at the tournament
+        self._tourn_golfer_id = tourn_golfer_id
+        # the id for this tournament
+        self._tourn_id = tourn_id
 
     ### Please complete the following functions
+    @property
+    def tourn_golfer_id(self):
+        return self._tourn_golfer_id
 
-    # get_golfer_id
-    def golfer_id(self) -> str:
-        """
-        return the golfer_id to the caller
-        """
-        return self._golfer_id
-
-    # get_golfer_name
-    def golfer_name(self) -> str:
-        """
-        return the golfer_name to the caller
-        """
-        return self._golfer_name
-
-    # get_golfer_birthdate
-    def golfer_birthdate(self) -> str:
-        """
-        return the golfer_birthdate to the caller
-        """
-        return self._golfer_birthdate
+    @property
+    def tourn_id(self):
+        return self._tourn_id
 
     # __str__
     def __str__(self):
@@ -48,4 +37,4 @@ class TournGolfer(Golfer):
         return a comma-delimiter string
         of the instance variable values
         """
-        return f'{self.golfer_id()},{self.golfer_name()},{self.golfer_birthdate()}'
+        return f'{self.golfer_id},{self.golfer_name},{self.golfer_birthdate},{self.tourn_golfer_id},{self._tourn_id}'

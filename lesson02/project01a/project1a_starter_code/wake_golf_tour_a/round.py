@@ -1,3 +1,6 @@
+import golfer_utilities as utilities
+
+
 class Round:
     """
     Round object derived from data in the tournamentInput.csv
@@ -14,32 +17,52 @@ class Round:
         constructor of class Round
         """
         # unique id for this round
-        self.__round_id = round_id
+        self._round_id = round_id
         # unique id for this tournament
-        self.__tourn_id = tourn_id
+        self._tourn_id = tourn_id
         # unique int for this hole
-        self.__day = day
+        self._day = day
+        self.round_id = None
+        self.tourn_id = None
+        self.day = None
 
     # get_hole_id
-    def get_round_id(self):
+    @property
+    def round_id(self):
         """
         return the round_id to the caller
         """
-        return self.__round_id
+        return self._round_id
 
-    # get_course_id
-    def get_tourn_id(self):
+    @round_id.setter
+    def round_id(self, id):
+        if not utilities.valid_id(id):
+            raise Exception(utilities.INVALID_ID.format("round_id"))
+        self._round_id = id
+
+    @property
+    def tourn_id(self):
         """
         return the tourn_id to the caller
         """
-        return self.__tourn_id
+        return self._tourn_id
 
-    # get_hole_num
-    def get_day(self):
+    @tourn_id.setter
+    def tourn_id(self, id):
+        if not utilities.valid_id(id):
+            raise Exception(utilities.INVALID_ID.format("tourn_id"))
+        self._tourn_id = id
+
+    @property
+    def day(self):
         """
         return the day to the caller
         """
-        return self.__day
+        return self._day
+
+    @day.setter
+    def day(self, day):
+        self._day = day
 
     # __str__
     def __str__(self):
@@ -47,6 +70,6 @@ class Round:
         create a comma-delimiter string
         of the instance variable values
         """
-        return f'{self.get_round_id(), self.get_tourn_id(), self.get_day()}'
+        return f'{self.round_id, self.tourn_id, self.day}'
 
 

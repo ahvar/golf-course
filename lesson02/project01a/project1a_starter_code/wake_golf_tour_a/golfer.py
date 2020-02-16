@@ -44,8 +44,7 @@ class Golfer:
         :param id: unique golfer id
         :return:
         """
-        ws = [ws for ws in string.whitespace if id.find(ws) is not -1]
-        if len(ws) > 0:
+        if not utilities.valid_id(id):
             raise Exception('Only letters and digits can comprise the golfer id')
         self._golfer_id = id
 
