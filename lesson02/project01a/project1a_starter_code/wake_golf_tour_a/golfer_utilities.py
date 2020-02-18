@@ -1,6 +1,8 @@
 import re
 import string
 from datetime import date
+import openpyxl as px
+
 INVALID_ID = "Only letters and digits can comprise the {}"
 
 # to_SQL_date(self, bday)
@@ -116,5 +118,16 @@ class Date:
         fmt = _format[code]
         return fmt.format(d=self)
 
+
+def add_prez_inauguration_age(ws):
+    """
+    Adds the age that each president was inaugurated to a column in the presidents.xlsx file
+    :param ws: presidents excel worksheet
+    :return:
+    """
+    new_col = ws.max_column + 1
+    ws.cell(row=1, column=new_col).value = 'Age at Inauguration'
+    for row in range(2, 47):
+        birth_date =
 
 
