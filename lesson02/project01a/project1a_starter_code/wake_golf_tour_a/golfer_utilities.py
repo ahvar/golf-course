@@ -118,6 +118,14 @@ class Date:
         fmt = _format[code]
         return fmt.format(d=self)
 
+def make_date(date_str):
+    if date_str.find('/') is not -1:
+        y, m, d = date_str.split('/')
+    elif date_str.find('-') is not -1:
+        y, m, d = date_str.split('-')
+    else:
+        raise Exception("Illegal date format")
+    return date(int(y), int(m), int(d))
 
 def add_prez_inauguration_age(ws):
     """
@@ -128,6 +136,10 @@ def add_prez_inauguration_age(ws):
     new_col = ws.max_column + 1
     ws.cell(row=1, column=new_col).value = 'Age at Inauguration'
     for row in range(2, 47):
-        birth_date =
+        birth_date = make_date(ws.cell(row=row, column=4).value)
+        inaugural_date = make_date(ws.cell(row=row, column=8).value)
+        raw_age_took_office = inaugural_date - birth_date
+        human_age_took_office = raw_age_took_office.days / 365.25
+        ws.cell(row=row, column=new_col).value = human_age_took_office
 
 

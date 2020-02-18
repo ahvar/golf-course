@@ -24,6 +24,7 @@ class Tournament:
         self.__tourn_id = tourn_id
         self.__tourn_name = name
         self.__course_id = course_id
+        self.__start_date = start_date
         self.__num_rounds = num_rounds
         self.__num_golfers = num_golfers
 

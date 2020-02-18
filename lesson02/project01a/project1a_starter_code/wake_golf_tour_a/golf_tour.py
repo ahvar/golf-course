@@ -3,6 +3,7 @@ import pprint
 from golfCourse import GolfCourse
 from hole import Hole
 from golfer import Golfer
+from tournament import Tournament
 
 
 def main():
@@ -89,84 +90,28 @@ def create_golf_courses(filename):
 
     print("\nGolf Course List: golf_course_list\n")
 
-    # Algorithm:
-    # 1. Create an empty list called golf_course_list that will contain
-    #    GolfCourse objects whose data comes from the input file
-
     golf_course_list = []
-
-    # 2. Create an empty dictionary called golf_course_holes_dict
-    #    whose key is the golf_course_id and the value is a tuple
-    #    containing hole_number and par_value
     
     golf_course_holes_dict = dict()
 
-    # 3. Initialize the golf_course_id to 1
-
     golf_course_id = 1
 
-    # 4. Use a try/except block to capture a File Not Found Error
-
     try:
-        # a. Open the input_file object for reading the input file
+        with open(filename, 'r') as courses_in:
+            file_lines = csv.reader(courses_in)
+            for course_name, *pars in file_lines:
+                holes = []
+                hole_count = 1
+                for par in pars:
+                    total_par = total_par + int(par)
+                    holes.append((hole_count, int(par)))
+                    hole_count += 1
 
-        input_file = open(filename, 'r')
+                golf_course_holes_dict[golf_course_id] = holes
 
-        # b. Call the csv.reader function, passing in the input file
-        #    and capturing the CSV file contents.
+            golf_course_list.append(GolfCourse(golf_course_id, course_name.strip(), total_par))
 
-        file_lines = csv.reader(input_file)
-
-        # c. Create a list from the file contents: courses_list
-
-        courses_list = list(file_lines)
-
-        # d. Create an outer loop to read each golf course in
-        #    courses_list
-
-        for golf_course in courses_list:
-
-            # Outer Loop
-            # 1. The first element (golf course name) is stripped
-            #    of whitespace.
-
-            golf_course_name = golf_course[0].strip()
-
-            # 2. Create an inner loop to traverse the 18 hole
-            #    par values using the range function
-
-            total_par = 0
-            holes = []
-            for i in range(1,19):
-                # Inner Loop
-                # a. Convert the string hole par values to ints
-                par = int(golf_course[i])
-
-                # b. Add value to total par
-                total_par = total_par + par
-
-                # c. Append hole_num and par to list for dictionary
-                holes.append((i, par))
-
-            # 3. Add entry for this golf course's holes to the golf_course_holes_dict
-            golf_course_holes_dict[golf_course_id] = holes
-
-            # 4. Create a new GolfCourse object, call it golf_course,
-            #    passing in golf_course_id, golf_course_name, and total_par
-
-            golf_course = GolfCourse(golf_course_id, golf_course_name, total_par)
-
-            # 5. Append the golf_course object to the golf_course_list
-
-            golf_course_list.append(golf_course)
-
-            # 6. Increment the golf_course_id
-
-            golf_course_id = golf_course_id + 1
-
-        # e. Close input_file object
-
-        input_file.close()
+            golf_course_id += 1
 
     except IOError:
         print("File Not Found Error.")
@@ -288,6 +233,65 @@ def create_rounds(tournament_list):
     ### Please provide your code here
 
     return rounds_list
+
+
+def create_tournaments(filename, golf_course_list):
+    """
+    The tournamentsInput.csv has two different record types in the file.
+    Hint: Open the file and see how it is organized.
+    The first record type has
+
+    golf_course_name, tourn_name, start_date, num_rounds, num_golfers
+
+    where golf_course_name is the name of the golf course,
+          tourn_name is the name of the tournament,
+          start_date is the first day of the tournament,
+          num_rounds is the number of rounds played in this tournament, and
+          num_golfers is the number of golfers playing in this tournament
+
+    The second record type is just a single golfer name.
+    The number of these records is specified by the num_golfers field from the first record type
+        golfer1_name
+        golfer2_name
+        ...
+        golfer15_name
+
+    Note: string input needs to be stripped of any whitespace
+          int strings need to be changed to ints
+
+    Create a Tournament object
+    containing -
+        golfer_id, golfer_name, golfer_birthdate
+
+    Create dictionary entry value for this tourn_id_key,
+        the value is a list to be filled in with the golfer names
+        as they are read from the input file.
+
+    Return the tournament_list and tourn_golfers_dict
+    """
+    print("\nThe Tournament object list:\n")
+
+    # Create an empty list called tournament_list
+    tournament_list = []
+
+    # Create an empty dictionary called tourn_golfers_dict
+    tourn_golfers_dict = dict()
+    with open('tournamentsInput.csv', 'r') as tourn_in:
+        tourn_reader = csv.reader(tourn_in)
+        tourn_data = list(tourn_reader)
+
+    tourn_id = 1
+    for entry in tourn_data:
+        if entry[0].find('Golf Course') is not -1:
+            tourn_name, course_id, date_str, num_rounds, num_golfers = entry
+            t = Tournament(tourn_id, tourn_name, course_id, date_str, num_rounds, num_golfers)
+            start = tourn_data.index(entry) + 1
+            end = start + int(num_golfers)
+            tourn_golfers_dict[t] = tourn_data[start:end]
+            tournament_list.append(t)
+            tourn_id += 1
+
+    return tournament_list, tourn_golfers_dict
 
 
 def create_tourn_golfers(tourn_golfers_dict, golfer_list):
