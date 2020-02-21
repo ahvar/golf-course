@@ -1,4 +1,5 @@
-import golfer_utilities as utilities
+import lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfer_utilities as utilities
+#import golfer_utilities as utilities
 
 
 class Hole:

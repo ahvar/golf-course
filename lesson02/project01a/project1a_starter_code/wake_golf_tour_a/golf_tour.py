@@ -1,9 +1,9 @@
 import csv
 import pprint
-from golfCourse import GolfCourse
-from hole import Hole
-from golfer import Golfer
-from tournament import Tournament
+from lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfCourse import GolfCourse
+from lesson02.project01a.project1a_starter_code.wake_golf_tour_a.hole import Hole
+from lesson02.project01a.project1a_starter_code.wake_golf_tour_a.golfer import Golfer
+from lesson02.project01a.project1a_starter_code.wake_golf_tour_a.tournament import Tournament
 
 
 def main():
@@ -93,7 +93,6 @@ def create_golf_courses(filename):
     golf_course_list = []
     
     golf_course_holes_dict = dict()
-
     golf_course_id = 1
 
     try:
@@ -102,16 +101,15 @@ def create_golf_courses(filename):
             for course_name, *pars in file_lines:
                 holes = []
                 hole_count = 1
+                total_par = 0
                 for par in pars:
                     total_par = total_par + int(par)
                     holes.append((hole_count, int(par)))
                     hole_count += 1
 
                 golf_course_holes_dict[golf_course_id] = holes
-
-            golf_course_list.append(GolfCourse(golf_course_id, course_name.strip(), total_par))
-
-            golf_course_id += 1
+                golf_course_list.append(GolfCourse(golf_course_id, course_name.strip(), total_par))
+                golf_course_id += 1
 
     except IOError:
         print("File Not Found Error.")
