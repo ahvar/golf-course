@@ -106,6 +106,15 @@ class TestGolfTour(unittest.TestCase):
 
     @staticmethod
     def verify_gc_par_list(list_of_tuples, list_of_pars) -> bool:
+        """
+        Every index of the list of tuples is a tuple with the hole (1 - 18) and the par for that hole. We assume
+        that the holes are organized in ascending order. we also assume that the correct list of pars has been passed,
+        otherwise the test will fail as the wrong list of pars has been passed.
+
+        :param list_of_tuples: a list of tuples containing the hole number and the par for that hole
+        :param list_of_pars: a list of actual pars for a course
+        :return:
+        """
         for i in range(1, 18):
             hole_par = tuple(list_of_tuples[i - 1])
             if hole_par[0] is not i or hole_par[1] is not list_of_pars[i - 1]:
